@@ -1,0 +1,1 @@
+ALTER TABLE game_data_content_blocks ADD COLUMN IF NOT EXISTS title VARCHAR(255) DEFAULT '';
