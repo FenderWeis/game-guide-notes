@@ -1,6 +1,8 @@
 import { createServerClient } from '@/lib/supabase/server'
 import { ArrowUpRight, Clock, Heart } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 export default async function HomePage() {
   let guides: { id: string; title: string; content: string; likes: number; created_at: string }[] = []
 

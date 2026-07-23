@@ -1,7 +1,9 @@
 import { createServerClient } from '@/lib/supabase/server'
-import { Star, Edit3, Plus } from 'lucide-react'
 import BackButton from '@/components/UI/BackButton'
-import DeleteButton from '@/components/UI/DeleteButton'
+import GameDetailActions from '@/components/Game/GameDetailActions'
+import GameDataItemActions from '@/components/Game/GameDataItemActions'
+
+export const dynamic = 'force-dynamic'
 
 interface GameDataListProps {
   params: { id: string }
@@ -65,15 +67,7 @@ export default async function GameDataListPage({ params, searchParams }: GameDat
           <span className="text-gray-300">/</span>
           <span className="text-gray-800">{selectedCategory?.name || '全部数据'}</span>
         </nav>
-        <a
-          href={`/admin/games/${params.id}/data/new`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          <Plus className="w-4 h-4" />
-          编辑资料
-        </a>
+        <GameDetailActions gameId={params.id} />
       </div>
 
       <div className="flex gap-3 mb-6 overflow-x-auto pb-2">
@@ -85,8 +79,8 @@ export default async function GameDataListPage({ params, searchParams }: GameDat
               key={category.id}
               href={`/games/${params.id}/data?type=${category.id}`}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors whitespace-nowrap ${isSelected
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white border border-gray-200 hover:border-blue-500 hover:text-blue-600'
+                ? 'bg-blue-600 text-white'
+                : 'bg-white border border-gray-200 hover:border-blue-500 hover:text-blue-600'
                 }`}
             >
               <span>{category.name}</span>
@@ -119,18 +113,7 @@ export default async function GameDataListPage({ params, searchParams }: GameDat
                   <span className="text-xs text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">
                     {getCategoryName(item.category_id)}
                   </span>
-                  <div className="flex items-center gap-2">
-                    <a
-                      href={`/admin/games/${params.id}/data/${item.id}/edit`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-blue-600"
-                      title="编辑"
-                    >
-                      <Edit3 className="w-4 h-4" />
-                    </a>
-                    <DeleteButton gameId={params.id} dataId={item.id} />
-                  </div>
+                  <GameDataItemActions gameId={params.id} dataId={item.id} />
                 </div>
                 <h4 className="font-medium text-gray-800 mb-2">
                   <a href={`/games/${params.id}/data/${item.id}`} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600">

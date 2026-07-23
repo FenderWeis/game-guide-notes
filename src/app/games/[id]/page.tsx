@@ -1,7 +1,10 @@
 import { createServerClient } from '@/lib/supabase/server'
-import { Star, Plus, Edit3 } from 'lucide-react'
+import { Star } from 'lucide-react'
 import BackButton from '@/components/UI/BackButton'
-import DeleteButton from '@/components/UI/DeleteButton'
+import GameDetailActions from '@/components/Game/GameDetailActions'
+import GameDataItemActions from '@/components/Game/GameDataItemActions'
+
+export const dynamic = 'force-dynamic'
 
 interface GameDetailProps {
   params: { id: string }
@@ -108,15 +111,7 @@ export default async function GameDetailPage({ params }: GameDetailProps) {
       <section>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-gray-500 uppercase tracking-wider text-center flex-1">游戏数据详情</h2>
-          <a
-            href={`/admin/games/${params.id}/data/new`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 text-blue-600 hover:text-blue-700 text-sm flex-shrink-0 ml-4"
-          >
-            <Plus className="w-4 h-4" />
-            编辑资料
-          </a>
+          <GameDetailActions gameId={params.id} />
         </div>
 
         <div className="flex gap-3 mb-6 overflow-x-auto pb-2">
@@ -158,18 +153,7 @@ export default async function GameDetailPage({ params }: GameDetailProps) {
                     <span className="text-xs text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">
                       {getCategoryName(item.category_id)}
                     </span>
-                    <div className="flex items-center gap-2">
-                      <a
-                        href={`/admin/games/${params.id}/data/${item.id}/edit`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-400 hover:text-blue-600"
-                        title="编辑"
-                      >
-                        <Edit3 className="w-4 h-4" />
-                      </a>
-                      <DeleteButton gameId={params.id} dataId={item.id} />
-                    </div>
+                    <GameDataItemActions gameId={params.id} dataId={item.id} />
                   </div>
                   <h4 className="font-medium text-gray-800 mb-2">
                     <a href={`/games/${params.id}/data/${item.id}`} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600">

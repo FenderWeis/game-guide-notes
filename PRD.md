@@ -260,3 +260,61 @@
 | 图片存储超限 | 压缩图片、定期清理、考虑第三方图床 |
 | 数据库性能 | 索引优化、分页查询、缓存策略 |
 | 安全风险 | Supabase Row Level Security、输入验证 |
+
+---
+
+## 十、部署方案
+
+### 10.1 部署平台
+- **前端部署**：Cloudflare Pages（完全免费，全球CDN加速）
+- **后端数据库**：Supabase PostgreSQL（免费500MB）
+- **文件存储**：Supabase Storage（免费1GB）
+
+### 10.2 部署步骤
+1. 将代码推送到 GitHub 仓库
+2. 在 Cloudflare Pages 配置项目
+3. 添加环境变量（Supabase URL 和 ANON_KEY）
+4. 自动构建部署
+
+### 10.3 环境变量配置
+| 变量名 | 说明 |
+|--------|------|
+| NEXT_PUBLIC_SUPABASE_URL | Supabase项目URL |
+| NEXT_PUBLIC_SUPABASE_ANON_KEY | Supabase匿名密钥 |
+
+---
+
+## 十一、变更记录
+
+### 版本 1.1（2026-07-23）
+
+**新增功能：**
+- 添加用户角色系统（user/senior/admin）
+- 添加高级用户（senior）权限：可发布攻略、编辑游戏资料
+- 添加用户管理页面（仅admin可访问）
+- 添加游戏资料模块和内容块结构
+- 添加表格编辑器组件（支持合并/拆分单元格）
+- 添加资料类型管理功能
+
+**修改功能：**
+- 用户权限矩阵扩展为四级（游客/普通用户/高级用户/管理员）
+- 攻略发布权限：从仅管理员扩展为 senior 和 admin
+- 游戏百科编辑权限：从仅管理员扩展为 senior 和 admin
+- 数据模型新增：game_data_modules、game_data_content_blocks、categories 表
+
+**技术变更：**
+- 部署平台从 Vercel 变更为 Cloudflare Pages（国内访问速度更快）
+- 添加 useUserRole 自定义 Hook 处理角色权限
+- 添加 safeQuery 和 isNetworkError 工具函数
+- 添加 ARCHITECTURE.md 项目架构文档
+
+**修复问题：**
+- 表单内按钮缺少 type="button" 导致页面跳转
+- TableEditor 组件 useEffect 依赖缺失
+- 表格内容块保存时被错误跳过
+- 动态页面 cookies 导致静态生成失败
+
+---
+
+*文档版本: 1.1*
+*最后更新: 2026-07-23*

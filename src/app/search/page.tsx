@@ -1,6 +1,8 @@
 import { createServerClient } from '@/lib/supabase/server'
 import { Heart, Clock, Search } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 interface SearchPageProps {
   searchParams: { q: string }
 }

@@ -187,42 +187,49 @@ export default function EditGuidePage({ params }: EditGuidePageProps) {
             <div className="border border-gray-300 rounded-lg overflow-hidden">
               <div className="flex items-center gap-1 p-2 bg-gray-50 border-b border-gray-300">
                 <button
+                  type="button"
                   onClick={() => editor.chain().focus().toggleBold().run()}
                   className="p-2 hover:bg-gray-200 rounded"
                 >
                   <Bold className="w-4 h-4" />
                 </button>
                 <button
+                  type="button"
                   onClick={() => editor.chain().focus().toggleItalic().run()}
                   className="p-2 hover:bg-gray-200 rounded"
                 >
                   <Italic className="w-4 h-4" />
                 </button>
                 <button
+                  type="button"
                   onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
                   className="p-2 hover:bg-gray-200 rounded"
                 >
                   <Heading1 className="w-4 h-4" />
                 </button>
                 <button
+                  type="button"
                   onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
                   className="p-2 hover:bg-gray-200 rounded"
                 >
                   <Heading2 className="w-4 h-4" />
                 </button>
                 <button
+                  type="button"
                   onClick={() => editor.chain().focus().toggleBulletList().run()}
                   className="p-2 hover:bg-gray-200 rounded"
                 >
                   <List className="w-4 h-4" />
                 </button>
                 <button
+                  type="button"
                   onClick={() => editor.chain().focus().toggleOrderedList().run()}
                   className="p-2 hover:bg-gray-200 rounded"
                 >
                   <ListOrdered className="w-4 h-4" />
                 </button>
                 <button
+                  type="button"
                   onClick={() => {
                     const previousUrl = editor.getAttributes('link').href
                     const url = window.prompt('Enter URL:', previousUrl || '')

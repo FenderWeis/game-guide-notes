@@ -60,7 +60,7 @@ export default function TableEditor({ value, onChange }: TableEditorProps) {
       setCells(initCells(rows, cols))
     }
     setInitialized(true)
-  }, [])
+  }, [value])
 
   useEffect(() => {
     onChangeRef.current = onChange
@@ -391,6 +391,7 @@ export default function TableEditor({ value, onChange }: TableEditorProps) {
         </div>
         <div className="flex items-center gap-1 ml-auto">
           <button
+            type="button"
             onClick={addRow}
             className="p-2 text-blue-600 hover:bg-blue-50 rounded"
             title="添加行"
@@ -398,6 +399,7 @@ export default function TableEditor({ value, onChange }: TableEditorProps) {
             <Plus className="w-4 h-4" />
           </button>
           <button
+            type="button"
             onClick={removeRow}
             disabled={rows <= 1}
             className="p-2 text-red-600 hover:bg-red-50 rounded disabled:opacity-50 disabled:cursor-not-allowed"
@@ -406,6 +408,7 @@ export default function TableEditor({ value, onChange }: TableEditorProps) {
             <Minus className="w-4 h-4" />
           </button>
           <button
+            type="button"
             onClick={addCol}
             className="p-2 text-blue-600 hover:bg-blue-50 rounded"
             title="添加列"
@@ -413,6 +416,7 @@ export default function TableEditor({ value, onChange }: TableEditorProps) {
             <Plus className="w-4 h-4" />
           </button>
           <button
+            type="button"
             onClick={removeCol}
             disabled={cols <= 1}
             className="p-2 text-red-600 hover:bg-red-50 rounded disabled:opacity-50 disabled:cursor-not-allowed"
@@ -422,6 +426,7 @@ export default function TableEditor({ value, onChange }: TableEditorProps) {
           </button>
           <div className="w-px h-6 bg-gray-300 mx-1" />
           <button
+            type="button"
             onClick={mergeSelectedCells}
             disabled={selectedCells.length < 2}
             className="p-2 text-blue-600 hover:bg-blue-50 rounded disabled:opacity-50 disabled:cursor-not-allowed"
@@ -430,6 +435,7 @@ export default function TableEditor({ value, onChange }: TableEditorProps) {
             <Grid3X3 className="w-4 h-4" />
           </button>
           <button
+            type="button"
             onClick={splitSelectedCell}
             disabled={selectedCells.length !== 1}
             className="p-2 text-blue-600 hover:bg-blue-50 rounded disabled:opacity-50 disabled:cursor-not-allowed"
@@ -438,6 +444,7 @@ export default function TableEditor({ value, onChange }: TableEditorProps) {
             <Square className="w-4 h-4" />
           </button>
           <button
+            type="button"
             onClick={() => {
               setCells(initCells(3, 3))
               setRows(3)

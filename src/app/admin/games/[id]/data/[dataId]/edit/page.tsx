@@ -279,7 +279,7 @@ export default function EditGameDataPage({ params }: EditGameDataPageProps) {
     }
 
     try {
-      console.log('Step 1: Updating game_data...')
+      // 更新资料条目基本信息
       const { error: updateError } = await supabase.from('game_data').update({
         title,
         content: '',
@@ -287,29 +287,26 @@ export default function EditGameDataPage({ params }: EditGameDataPageProps) {
       }).eq('id', params.dataId)
 
       if (updateError) {
-        console.error('Update game_data error:', updateError)
         throw updateError
       }
-      console.log('Step 1 done: game_data updated')
 
+      // 保存模块和内容块
       for (let i = 0; i < modules.length; i++) {
         const module = modules[i]
         if (!module.title.trim()) continue
 
         if (module.id) {
-          console.log(`Step 2: Updating module ${i}...`)
+          // 更新已有模块
           const { error: moduleError } = await supabase.from('game_data_modules').update({
             title: module.title,
             sort_order: i,
           }).eq('id', module.id)
 
           if (moduleError) {
-            console.error('Update module error:', moduleError)
             throw moduleError
           }
-          console.log(`Step 2 done: module ${i} updated`)
         } else {
-          console.log(`Step 2: Inserting module ${i}...`)
+          // 插入新模块
           const { data: moduleData, error: moduleError } = await supabase.from('game_data_modules').insert({
             game_data_id: params.dataId,
             title: module.title,
@@ -317,25 +314,18 @@ export default function EditGameDataPage({ params }: EditGameDataPageProps) {
           }).select().single()
 
           if (moduleError) {
-            console.error('Insert module error:', moduleError)
             throw moduleError
           }
           module.id = moduleData.id
-          console.log(`Step 2 done: module ${i} inserted with id:`, moduleData.id)
         }
 
+        // 保存内容块
         for (let j = 0; j < module.contentBlocks.length; j++) {
           const block = module.contentBlocks[j]
-          if (!block.content && !block.image) continue
+          if (!block.content && !block.image && block.contentType !== 'table') continue
 
           if (block.id) {
-            console.log(`Step 3: Updating block ${j} for module ${i}...`)
-            console.log('Block data:', {
-              title: block.title,
-              contentLength: block.content?.length,
-              image: block.image,
-              contentType: block.contentType,
-            })
+            // 更新已有内容块
             const { error: blockError } = await supabase.from('game_data_content_blocks').update({
               title: block.title,
               content: block.content,
@@ -345,18 +335,10 @@ export default function EditGameDataPage({ params }: EditGameDataPageProps) {
             }).eq('id', block.id)
 
             if (blockError) {
-              console.error('Update block error:', blockError)
               throw blockError
             }
-            console.log(`Step 3 done: block ${j} updated`)
           } else {
-            console.log(`Step 3: Inserting block ${j} for module ${i}...`)
-            console.log('Block data:', {
-              title: block.title,
-              contentLength: block.content?.length,
-              image: block.image,
-              contentType: block.contentType,
-            })
+            // 插入新内容块
             const { data: blockData, error: blockError } = await supabase.from('game_data_content_blocks').insert({
               game_data_id: params.dataId,
               module_id: module.id!,
@@ -368,27 +350,23 @@ export default function EditGameDataPage({ params }: EditGameDataPageProps) {
             }).select().single()
 
             if (blockError) {
-              console.error('Insert block error:', blockError)
               throw blockError
             }
             block.id = blockData.id
-            console.log(`Step 3 done: block ${j} inserted`)
           }
         }
       }
 
-      console.log('All steps completed successfully!')
       setMessage({ type: 'success', text: '修改成功！' })
       setTimeout(() => {
         window.location.href = `/games/${params.id}/data/${params.dataId}`
       }, 1500)
     } catch (error: any) {
       console.error('Save failed:', error)
-      const errorMessage = error.message || '保存失败，请检查控制台获取详细信息'
+      const errorMessage = error.message || '保存失败，请稍后重试'
       setMessage({ type: 'error', text: errorMessage })
       setTimeout(() => setMessage(null), 5000)
     } finally {
-      console.log('Finally: Setting isSaving to false')
       setIsSaving(false)
     }
   }
@@ -476,10 +454,10 @@ export default function EditGameDataPage({ params }: EditGameDataPageProps) {
                     className="px-2 py-1 border border-blue-500 rounded focus:ring-2 focus:ring-blue-500"
                     autoFocus
                   />
-                  <button onClick={handleSaveCategory} className="text-green-600 hover:text-green-700">
+                  <button type="button" onClick={handleSaveCategory} className="text-green-600 hover:text-green-700">
                     <Save className="w-4 h-4" />
                   </button>
-                  <button onClick={() => { setEditingCategoryId(null); setEditingCategoryName('') }} className="text-gray-500 hover:text-gray-700">
+                  <button type="button" onClick={() => { setEditingCategoryId(null); setEditingCategoryName('') }} className="text-gray-500 hover:text-gray-700">
                     <X className="w-4 h-4" />
                   </button>
                 </>
@@ -492,10 +470,10 @@ export default function EditGameDataPage({ params }: EditGameDataPageProps) {
                   >
                     {category.name}
                   </button>
-                  <button onClick={() => handleEditCategory(category)} className="text-gray-400 hover:text-blue-600" title="编辑">
+                  <button type="button" onClick={() => handleEditCategory(category)} className="text-gray-400 hover:text-blue-600" title="编辑">
                     <Edit3 className="w-4 h-4" />
                   </button>
-                  <button onClick={() => handleDeleteCategory(category.id, category.name)} className="text-gray-400 hover:text-red-600" title="删除">
+                  <button type="button" onClick={() => handleDeleteCategory(category.id, category.name)} className="text-gray-400 hover:text-red-600" title="删除">
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </>
@@ -551,10 +529,10 @@ export default function EditGameDataPage({ params }: EditGameDataPageProps) {
                         placeholder="输入模块标题"
                         autoFocus
                       />
-                      <button onClick={() => saveModule(moduleIndex)} className="text-green-600 hover:text-green-700">
+                      <button type="button" onClick={() => saveModule(moduleIndex)} className="text-green-600 hover:text-green-700">
                         <Save className="w-4 h-4" />
                       </button>
-                      <button onClick={cancelEditModule} className="text-gray-500 hover:text-gray-700">
+                      <button type="button" onClick={cancelEditModule} className="text-gray-500 hover:text-gray-700">
                         <X className="w-4 h-4" />
                       </button>
                     </div>

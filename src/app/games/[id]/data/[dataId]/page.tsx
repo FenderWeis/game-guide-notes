@@ -3,6 +3,8 @@ import { ArrowLeft, Edit3, Trash2 } from 'lucide-react'
 import BackButton from '@/components/UI/BackButton'
 import DeleteButton from '@/components/UI/DeleteButton'
 
+export const dynamic = 'force-dynamic'
+
 interface GameDataDetailProps {
   params: { id: string; dataId: string }
 }

@@ -234,6 +234,12 @@ npm config set cache "d:\Resoult\Wind\development\week2\.npm-cache" --global
 npm install
 ```
 
+## 项目文档
+
+- **README.md**: 项目简介、部署指南
+- **ARCHITECTURE.md**: 项目架构、模块详解、扩展开发指南
+- **PRD.md**: 产品需求文档
+
 ## License
 
 MIT
