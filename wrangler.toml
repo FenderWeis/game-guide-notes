@@ -1,6 +1,5 @@
 name = "game-guide-notes"
 type = "pages"
 
-[build]
-command = "npm install && npm run build"
-publish = ".next"
+[pages]
+build_output_dir = ".next"
