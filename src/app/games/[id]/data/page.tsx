@@ -71,7 +71,7 @@ export default async function GameDataListPage({ params, searchParams }: GameDat
       </div>
 
       <div className="flex gap-3 mb-6 overflow-x-auto pb-2">
-        {categories?.map((category) => {
+        {categories?.map((category: { id: string; name: string }) => {
           const count = getCategoryItemsCount(category.id)
           const isSelected = category.id === selectedCategoryId
           return (

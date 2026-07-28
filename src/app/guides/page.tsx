@@ -25,7 +25,7 @@ export default async function GuidesPage() {
       <h1 className="text-3xl font-bold text-gray-800 mb-8">攻略列表</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {guides?.map((guide) => (
+        {guides?.map((guide: { id: string; title: string; content: string; created_at: string; likes: number }) => (
           <article
             key={guide.id}
             className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer"

@@ -39,7 +39,7 @@ export default async function GameDetailPage({ params }: GameDetailProps) {
   }
 
   const getCategoryName = (categoryId: string) => {
-    return categories?.find(c => c.id === categoryId)?.name || '未知'
+    return categories?.find((c: { id: string; name: string }) => c.id === categoryId)?.name || '未知'
   }
 
   const getCategoryItemsCount = (categoryId: string) => {
@@ -115,7 +115,7 @@ export default async function GameDetailPage({ params }: GameDetailProps) {
         </div>
 
         <div className="flex gap-3 mb-6 overflow-x-auto pb-2">
-          {categories?.map((category) => {
+          {categories?.map((category: { id: string; name: string }) => {
             const count = getCategoryItemsCount(category.id)
             return (
               <a
