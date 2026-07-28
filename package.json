@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3001",
-    "build": "next build",
+    "build": "next build && node -e \"const fs=require('fs'); const p='.next/cache'; fs.existsSync(p) && fs.rmSync(p, {recursive:true,force:true}); console.log('Removed .next/cache')\"",
     "start": "next start",
     "lint": "next lint"
   },
