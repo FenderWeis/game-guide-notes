@@ -48,7 +48,7 @@ export default async function GameDataListPage({ params, searchParams }: GameDat
   }
 
   const getCategoryName = (categoryId: string) => {
-    return categories?.find(c => c.id === categoryId)?.name || '未知'
+    return categories?.find((c: { id: string; name: string }) => c.id === categoryId)?.name || '未知'
   }
 
   const getCategoryItemsCount = (categoryId: string) => {
