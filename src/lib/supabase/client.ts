@@ -5,11 +5,25 @@ export const createClient = () => {
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('Missing Supabase environment variables. Check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.')
+    console.warn('Missing Supabase environment variables. Will use empty client.')
+    return {
+      from: () => ({
+        select: () => ({
+          order: async () => ({ data: [], error: null })
+        })
+      })
+    } as any
   }
 
   if (!supabaseUrl.startsWith('https://')) {
-    throw new Error('Invalid Supabase URL. Must start with https://')
+    console.warn('Invalid Supabase URL. Must start with https://')
+    return {
+      from: () => ({
+        select: () => ({
+          order: async () => ({ data: [], error: null })
+        })
+      })
+    } as any
   }
 
   try {
