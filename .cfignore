@@ -1,0 +1,22 @@
+# Next.js cache (webpack cache files > 25MB)
+.next/cache/
+.next/trace
+.next/*.js.nft.json
+
+# Dependencies (reinstalled during build)
+node_modules/
+
+# Version control
+.git/
+.github/
+
+# Environment files (set in Cloudflare dashboard)
+.env*
+
+# Development files
+.vscode/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

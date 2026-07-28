@@ -1,5 +1,4 @@
 name = "game-guide-notes"
-type = "pages"
-
-[pages]
-build_output_dir = ".next"
+compatibility_date = "2025-11-11"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".next"
